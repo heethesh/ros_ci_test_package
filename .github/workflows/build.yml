@@ -16,7 +16,7 @@ jobs:
       with:
         required-ros-distributions: melodic
     - name: Build and test ROS package
-      uses: ros-tooling/action-ros-ci@0.0.15
+      uses: ros-tooling/action-ros-ci@0.0.14
       with:
         package-name: ros_ci_test_package
         source-ros-binary-installation: melodic
