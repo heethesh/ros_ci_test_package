@@ -1,0 +1,22 @@
+name: Build
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup ROS
+      uses: ros-tooling/setup-ros@0.0.19
+      with:
+        required-ros-distributions: melodic
+    - name: Build and test ROS package
+      uses: ros-tooling/action-ros-ci@0.0.15
+      with:
+        package-name: ros_ci_test_package
+        source-ros-binary-installation: melodic
