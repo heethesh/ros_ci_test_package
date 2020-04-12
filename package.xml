@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!-- %Tag(FULLTEXT,-1)% -->
+<package format="2">
+  <!-- %Tag(NAME)% -->
+  <name>ros_ci_test_package</name>
+  <!-- %EndTag(NAME)% -->
+  <!-- %Tag(VERSION)% -->
+  <version>0.1.0</version>
+  <!-- %EndTag(VERSION)% -->
+  <!-- %Tag(DESC)% -->
+  <description>The ros_ci_test_package package</description>
+  <!-- %EndTag(DESC)% -->
+
+  <!-- %Tag(MAINTAINER)% -->
+  <maintainer email="heethesh@cmu.edu">Heethesh Vhavle</maintainer>
+  <!-- %EndTag(MAINTAINER)% -->
+  <!-- %Tag(LICENSE)% -->
+  <license>BSD</license>
+  <!-- %EndTag(LICENSE)% -->
+  <!-- %Tag(URLS)% -->
+  <url type="repository">https://github.com/heethesh/ros_ci_test_package.git</url>
+  <!-- %EndTag(URLS)% -->
+  <!-- %Tag(AUTHORS)% -->
+  <author email="heethesh@cmu.edu">Heethesh Vhavle</author>
+  <!-- %EndTag(AUTHORS)% -->
+
+  <!-- %Tag(DEPS)% -->
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>std_msgs</build_depend>
+
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <!-- %EndTag(DEPS)% -->
+
+  <!-- %Tag(EXPORT)% -->
+  <!-- %EndTag(EXPORT)% -->
+</package>
+<!-- %EndTag(FULLTEXT)% -->
