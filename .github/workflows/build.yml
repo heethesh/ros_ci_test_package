@@ -31,27 +31,27 @@ jobs:
     container:
       image: ${{ matrix.docker_image }}
     steps:
-      - name: Fetch Repository Name
+      - name: Fetch repository name
         run: echo ::set-env name=REPOSITORY_NAME::$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $2}' | sed -e "s/:refs//")
         shell: bash
-      - name: Setup Directories
+      - name: Setup directories
         run: mkdir -p ros_ws/src
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v2
         with:
           path: ros_ws/src
-      - name: Setup ROS Environment
+      - name: Setup ROS environment
         uses: ros-tooling/setup-ros@0.0.25
         with:
           required-ros-distributions: ${{ matrix.ros_distribution }}
       - name: Update rosdep
         run: rosdep update
-      - name: install catkin_ws dependencies
+      - name: Install catkin_ws dependencies
         run: "source /opt/ros/$DISTRO/setup.bash && cd ros_ws/ && rosdep install --from-paths src --ignore-src -r -y"
         env:
           DISTRO: ${{ matrix.ros_distribution }}
         shell: bash
-      - name: Build and Test
+      - name: Build and test
         run: "source /opt/ros/$DISTRO/setup.bash && cd ros_ws/ && catkin_make run_tests roslint_$REPOSITORY_NAME"
         env:
           DISTRO: ${{ matrix.ros_distribution }}
