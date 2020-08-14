@@ -5,54 +5,22 @@ on:
   push:
     branches:
       - master
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        ros_distribution:
-          - kinetic
-          - melodic
-          - noetic
-        include:
-            # Kinetic Kame (May 2016 - May 2021)
-          - docker_image: ubuntu:xenial
-            ros_distribution: kinetic
-            ros_version: 1
-            # Melodic Morenia (May 2018 - May 2023)
-          - docker_image: ubuntu:bionic
-            ros_distribution: melodic
-            ros_version: 1
-            # Noetic Ninjemys (May 2020 - May 2025)
-          - docker_image: ubuntu:focal
-            ros_distribution: noetic
-            ros_version: 1
     container:
-      image: ${{ matrix.docker_image }}
+      image: ubuntu:bionic
     steps:
-      - name: Fetch repository name
-        run: echo ::set-env name=REPOSITORY_NAME::$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $2}' | sed -e "s/:refs//")
-        shell: bash
-      - name: Setup directories
-        run: mkdir -p ros_ws/src
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          path: ros_ws/src
-      - name: Setup ROS environment
-        uses: ros-tooling/setup-ros@0.0.25
-        with:
-          required-ros-distributions: ${{ matrix.ros_distribution }}
-      - name: Update rosdep
-        run: rosdep update
-      - name: Install catkin_ws dependencies
-        run: "source /opt/ros/$DISTRO/setup.bash && cd ros_ws/ && rosdep install --from-paths src --ignore-src -r -y"
-        env:
-          DISTRO: ${{ matrix.ros_distribution }}
-        shell: bash
-      - name: Build and test
-        run: "source /opt/ros/$DISTRO/setup.bash && cd ros_ws/ && catkin_make run_tests roslint_$REPOSITORY_NAME"
-        env:
-          DISTRO: ${{ matrix.ros_distribution }}
-        shell: bash
+    - uses: actions/checkout@v2
+    - name: Setup ROS
+      uses: ros-tooling/setup-ros@0.0.25
+      with:
+        required-ros-distributions: melodic
+    - name: Build and test ROS package
+      uses: ros-tooling/action-ros-ci@0.0.19
+      with:
+        package-name: ros_ci_test_package
+        source-ros-binary-installation: melodic
+        target-ros1-distro: melodic
+        vcs-repo-file-url: ""
